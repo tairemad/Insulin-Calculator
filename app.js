@@ -8,13 +8,14 @@ app.controller('CalcCtrl', $scope => {
     $scope.correctionRatio;
     $scope.base;
     $scope.tdd;
+    let correctionUnits, carbUnits;
 
 
     $scope.calcCarbInsulinUnits = () => {
        return (Math.round($scope.carb/$scope.carbRatio));
     }
     $scope.calcCorrectionUnits = () => {
-       return (Math.round(($scope.sugar - $scope.base)/$scope.correctionRatio));
+      return (Math.round(($scope.sugar - $scope.base)/$scope.correctionRatio));
     }
     function round(value, decimals) {
         return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
@@ -32,6 +33,9 @@ app.controller('CalcCtrl', $scope => {
     $scope.twoDay = () => {
         return calcDays(2);
     }
+    $scope.totalUnits = () =>{
+        return $scope.calcCarbInsulinUnits() + $scope.calcCorrectionUnits();
+    }
 
 });
 
@@ -42,7 +46,7 @@ app.directive("bgDirective", () =>{
         template: `<h3>Calculate Units of Insulin to Take</h3>
             <h6>How many carbs injested?</h6>
             <input type="number" pattern="[0-9]*" inputmode="numeric" ng-model="carb">
-            <h6>Carb Ratio 1:</h6>
+            <h6>Carb Ratio (1: ?)</h6>
             <input type="number" pattern="[0-9]*" inputmode="numeric" ng-model="carbRatio">
             <label>Units of insulin to take:</label>
             <p ng-bind="calcCarbInsulinUnits() || '' " ></p>`
@@ -64,6 +68,16 @@ app.directive("correctionDirective", () =>{
             <p ng-bind="calcCorrectionUnits() || '' " ></p>`
     };
 });
+
+app.directive("totalDirective", () =>{
+    return {
+        restrict: "EA",
+        scope: false,
+        template: `<h4 class="bold">Total amount of units to take including correction factor:</h4>
+            <p ng-bind="totalUnits() || '' " ></p>`
+    };
+});
+
 
 app.directive("pumpDirective", () =>{
     return {
