@@ -8,7 +8,7 @@ app.controller('CalcCtrl', $scope => {
     $scope.correctionRatio;
     $scope.base;
     $scope.tdd;
-    let correctionUnits, carbUnits;
+
 
 
     $scope.calcCarbInsulinUnits = () => {
