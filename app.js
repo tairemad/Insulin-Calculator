@@ -12,10 +12,14 @@ app.controller('CalcCtrl', $scope => {
 
 
     $scope.calcCarbInsulinUnits = () => {
-       return (Math.round($scope.carb/$scope.carbRatio));
+       //return (Math.round($scope.carb/$scope.carbRatio));
+        const carb = ($scope.carb/$scope.carbRatio);
+        return round(carb, 2);
     }
     $scope.calcCorrectionUnits = () => {
-      return (Math.round(($scope.sugar - $scope.base)/$scope.correctionRatio));
+      //return (Math.round(($scope.sugar - $scope.base)/$scope.correctionRatio));
+      const correction = ($scope.sugar - $scope.base)/$scope.correctionRatio;
+      return round(correction, 2);
     }
     function round(value, decimals) {
         return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
